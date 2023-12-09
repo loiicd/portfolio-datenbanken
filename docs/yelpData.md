@@ -1,6 +1,16 @@
 # YelpData
 
-Unter src/yelpData müssen die 5 Yelp Dateien von Moodle abgelegt werden. Diese werden nicht mit auf das Repo gepusht, sondern nur lokal abgespeichert.
+Inhalt:
+1. [Setup](#setup)
+2. [Data](#data)
+    1. [Business](#business)
+    2. [Checkin](#checkin)
+    3. [Tip](#tip)
+    4. [Review](#review)
+
+## Setup
+
+Unter src/yelpData müssen die 5 Yelp Dateien von [Moodle](https://moodle.loerrach.dhbw.de/moodle/course/view.php?id=12391) abgelegt werden. Diese werden nicht mit auf das Repo gepusht, sondern nur lokal abgespeichert.
 
 ## Data
 
