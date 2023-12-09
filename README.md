@@ -1,5 +1,8 @@
 # Portfolio Datenbanken
-#READ YOU hehe
+
+[Requirements](./docs/requirements.md)
+[Data](./docs/yelpData.md)
+
 ## Setup
 
 ### Docker
