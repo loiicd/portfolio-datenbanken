@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    container_name: python-server
+    command: uvicorn src.main:app --host 0.0.0.0 --port 80 --reload
+    ports:
+      - "80:80"
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+      - mongodb
+      - mysql
+    env_file:
+      - .env
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
