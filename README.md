@@ -20,3 +20,6 @@ docker-compose up
 ```bash
 import mongo
 ```
+
+### 4. Initial Import MySQL
+...
