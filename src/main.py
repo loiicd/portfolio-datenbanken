@@ -2,24 +2,37 @@ from fastapi import FastAPI, HTTPException
 import redis
 import os
 import json
-import pymysql.cursors
+import mysql.connector
 
 app = FastAPI()
-print(f"Opening a new Redis connection on {os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}")
-redis_conn = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'), decode_responses=True)
-pubsub = redis_conn.pubsub()
-pubsub.subscribe('review_alert')
+print(f"opening a new redis on {os.getenv('HOST')}:{os.getenv('PORT')}")
+r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'))
 
-# MySQL Connection Configuration
-mysql_conn = pymysql.connect(
-    host=os.getenv('MYSQL_HOST'),
-    port=int(os.getenv('MYSQL_PORT')),
-    user=os.getenv('MYSQL_USER'),
-    password=os.getenv('MYSQL_PASSWORD'),
-    database=os.getenv('MYSQL_DATABASE'),
-    charset='utf8mb4',
-    cursorclass=pymysql.cursors.DictCursor
-)
+try:
+    # MySQL Connection Configuration
+    mysql_conn = mysql.connector.connect(
+        host=os.getenv('MYSQL_HOST'),
+        port=int(os.getenv('MYSQL_PORT')),
+        user=os.getenv('MYSQL_USER'),
+        password=os.getenv('MYSQL_PASSWORD'),
+        database=os.getenv('MYSQL_DATABASE'),
+        charset='utf8mb4'
+    )
+    print("Connected to MySQL")
+except mysql.connector.Error as err:
+    print(f"Error: {err}")
+    raise
+
+mysql_cursor = mysql_conn.cursor()
+
+@app.get("/")
+def read_root():
+    return {"Hello": "WWI"}
+
+@app.get("/hits")
+def record_hits():
+    r.incr("hits")
+    return {"Hello": r.get("hits")}
 
 def get_average_rating(business_id, n):
     with mysql_conn.cursor() as cursor:
@@ -34,22 +47,26 @@ def get_average_rating(business_id, n):
 
 @app.post("/reviews/{business_id}")
 def add_review(business_id: str, review: dict):
-    # Speichere die Bewertung in MySQL
-    with mysql_conn.cursor() as cursor:
-        cursor.execute(
-            "INSERT INTO review (business_id, user_id, stars, useful, funny, cool, text, date) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-            (business_id, review['user_id'], review['stars'], review['useful'], review['funny'],
-             review['cool'], review['text'], review['date'])
-        )
-    mysql_conn.commit()
+    try:
+        # Speichere die Bewertung in MySQL
+        with mysql_conn.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO review (business_id, user_id, stars, useful, funny, cool, text, date) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                (business_id, review['user_id'], review['stars'], review['useful'], review['funny'],
+                review['cool'], review['text'], review['date'])
+            )
+        mysql_conn.commit()
 
-    # Sende Benachrichtigung, wenn der Durchschnitt unter 2 ist
-    average_rating = get_average_rating(business_id, 5)  # Durchschnitt der letzten 5 Bewertungen
-    if average_rating is not None and average_rating < 2:
-        redis_conn.publish('review_alert', f'Low ratings for {business_id}')
+        # Sende Benachrichtigung, wenn der Durchschnitt unter 2 ist
+        average_rating = get_average_rating(business_id, 5)  # Durchschnitt der letzten 5 Bewertungen
+        if average_rating is not None and average_rating < 2:
+            r.publish('review_alert', f'Low ratings for {business_id}')
 
-    return {"message": "Review added successfully"}
+        return {"message": "Review added successfully"}
+    except mysql.connector.Error as err:
+        print(f"MySQL Error: {err}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
 if __name__ == '__main__':
     import uvicorn
