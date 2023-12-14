@@ -29,12 +29,10 @@ services:
   mysql:
     image: mysql
     environment:
-      MYSQL_DATABASE: 'Yelp'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'mysql'
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-    - "3306:3306"
+      - "3306:3306"
     volumes:
     - mysql_data:/var/lib/mysql  # Datenpersistenz für MySQL
 
