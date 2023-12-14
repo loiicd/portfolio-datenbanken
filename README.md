@@ -14,3 +14,9 @@ docker-compose up -d --build
 ```bash
 docker-compose up
 ```
+
+### 3. Initial Import Mongo
+- Execute index.py in operations/initialImports
+```bash
+import mongo
+```
