@@ -10,4 +10,4 @@ def read_root():
 
 @app.get('/statistics/{business_id}')
 def getStatistics(business_id: str):
-  return mySQLService.statistics(business_id)
+  return mySQLService.getStatistics(business_id)
