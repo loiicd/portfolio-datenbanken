@@ -4,3 +4,13 @@
 - [Data](./docs/yelpData.md)
 
 ## Setup
+
+### 1.
+```bash
+...
+```
+
+### 2.
+```bash
+...
+```
