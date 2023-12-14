@@ -23,6 +23,8 @@ services:
     image: mongo
     ports:
       - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db  # Datenpersistenz für MongoDB
 
   mysql:
     image: mysql
@@ -33,3 +35,9 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql  # Datenpersistenz für MySQL
+
+volumes:
+  mongodb_data:
+  mysql_data:
