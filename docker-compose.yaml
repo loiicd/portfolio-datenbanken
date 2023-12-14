@@ -27,18 +27,18 @@ services:
       - mongodb_data:/data/db  # Datenpersistenz für MongoDB
 
   mysql:
-  image: mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: "mysql"
-    MYSQL_DATABASE: "Yelp"
-    MYSQL_USER: "user"
-    MYSQL_PASSWORD: "password"
-  ports:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: 'Yelp'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'mysql'
+    ports:
     - "3306:3306"
-  volumes:
+    volumes:
     - mysql_data:/var/lib/mysql  # Datenpersistenz für MySQL
 
 
 volumes:
-  mongodb_data:
-  mysql_data:
+    mongodb_data:
+    mysql_data:
