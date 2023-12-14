@@ -5,12 +5,12 @@
 
 ## Setup
 
-### 1.
+### 1. Build
 ```bash
-...
+docker-compose up -d --build
 ```
 
-### 2.
+### 2. Update
 ```bash
-...
+docker-compose up
 ```
