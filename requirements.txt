@@ -3,3 +3,4 @@ uvicorn
 redis
 pymongo
 mysql-connector-python
+pymysql
