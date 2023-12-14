@@ -8,11 +8,19 @@ class MySQLService:
     self.database = 'portfoliodatabase'
 
   def connect(self):
-    connection = mysql.connector.connect(host=self.host, user=self.user, password=self.password, database=self.database)
-    return connection.cursor()
+    try:
+      return  mysql.connector.connect(host=self.host, user=self.user, password=self.password, database=self.database)
+    except mysql.connector.Error as err:
+      raise Exception(f'Error: {err}')
 
   def getStatistics(self, business_id: str):
-    cursor = self.connect()
-    query = f'SELECT * FROM business WHERE business_id = {business_id}'
-    cursor.execute(query)
-    return cursor.fetchall()
+    try:
+      connection = self.connect()
+      cursor = connection.cursor()
+      query = f'SELECT * FROM business WHERE business_id = {business_id}'
+      cursor.execute(query)
+      return cursor.fetchone()
+    except Exception as err:
+      return err
+    finally:
+      connection.close()
