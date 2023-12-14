@@ -19,3 +19,7 @@ def getReviews(business_id):
 @app.get('/reviews/trends/{business_id}')
 def getTrends(business_id):
   return mongoService.getTrends(business_id)
+
+@app.get('/reviews/checkstars/{business_id}')
+def getCheckStars(business_id):
+  return mongoService.getCheckStars(business_id)

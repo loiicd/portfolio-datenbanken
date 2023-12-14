@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  title: Your API Title
+  version: '1.0.0'
+  description: Your API description
+paths:
+  /business/name/{name}:
+    get:
+      summary: Get business by name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: Business name
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: State (optional)
+          schema:
+            type: string
+        - name: postal_code
+          in: query
+          description: Postal code (optional)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /business/{business_id}:
+    get:
+      summary: Get business by ID
+      parameters:
+        - name: business_id
+          in: path
+          required: true
+          description: Business ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /reviews/{business_id}:
+    get:
+      summary: Get reviews for a business
+      parameters:
+        - name: business_id
+          in: path
+          required: true
+          description: Business ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /reviews/trends/{business_id}:
+    get:
+      summary: Get trends for reviews of a business
+      parameters:
+        - name: business_id
+          in: path
+          required: true
+          description: Business ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /reviews/checkstars/{business_id}:
+    get:
+      summary: Check stars for reviews of a business
+      parameters:
+        - name: business_id
+          in: path
+          required: true
+          description: Business ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
