@@ -79,7 +79,7 @@ CREATE TABLE tip (
 
 CREATE TABLE checkin (
   business_id varchar(22)   NOT NULL,
-  date        date   NOT NULL,
+  date        date          NOT NULL,
   PRIMARY KEY (business_id, date),
   FOREIGN KEY (business_id) REFERENCES business(business_id)
 );

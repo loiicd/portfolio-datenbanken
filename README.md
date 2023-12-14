@@ -9,3 +9,8 @@
 ```bash
 docker-compose up -d --build
 ```
+
+### 2. Update
+```bash
+docker-compose up
+```
