@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: Your API Title
-  version: '1.0.0'
-  description: Your API description
+  title: API
+  version: '0.1.0'
+  description: Yepl Insides Api
 paths:
   /business/name/{name}:
     get:
@@ -66,9 +66,15 @@ paths:
       responses:
         '200':
           description: Successful response
+          content:
+            application/json:
+              example:
+                business_id: mpf3x-BjTdTEA3yCZrAYPw
+                reviews_count: 34
+                avg_stars: 2.4
   /reviews/checkstars/{business_id}:
     get:
-      summary: Check stars for reviews of a business
+      summary: Check stars for last 10 reviews of a business
       parameters:
         - name: business_id
           in: path
@@ -79,3 +85,9 @@ paths:
       responses:
         '200':
           description: Successful response
+          content:
+            application/json:
+              example:
+                business_id: mpf3x-BjTdTEA3yCZrAYPw
+                reviews_count: 5
+                avg_stars: 3.8
