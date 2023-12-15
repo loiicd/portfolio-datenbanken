@@ -45,9 +45,15 @@ class MongoService:
     connection = self.connect()
     collection = connection["Yelp Review"]
     reviews = list(collection.find({"business_id": business_id}))
-    count = len(reviews)
-    avg_stars = sum(review["stars"] for review in reviews) / count if count > 0 else 0
-    return {"business_id": business_id, "reviews_count": count, "avg_stars": avg_stars}
+    len_reviews = len(reviews)
+
+    # avg_stars = sum(review[type] for review in reviews) / len_reviews if len_reviews > 0 else 0
+
+    avg_stars = getAvgFromReview(reviews, "stars", len_reviews)
+    avg_useful = getAvgFromReview(reviews, "useful", len_reviews)
+    avg_funny = getAvgFromReview(reviews, "funny", len_reviews)
+    avg_cool = getAvgFromReview(reviews, "cool", len_reviews)
+    return {"business_id": business_id, "reviews_count": len_reviews, "avg_stars": avg_stars, "avg_useful": avg_useful, "avg_funny": avg_funny, "avg_cool": avg_cool}
   
   def getCheckStars(self, business_id):
     connection = self.connect()
@@ -57,4 +63,5 @@ class MongoService:
     avg_stars = sum(review["stars"] for review in last_10_reviews) / len(last_10_reviews) if len(last_10_reviews) > 0 else 0
     return {"business_id": business_id, "reviews_count": len(last_10_reviews), "avg_stars": avg_stars}
     
-    
+def getAvgFromReview(reviews, type, len_reviews):
+  return sum(review[type] for review in reviews) / len_reviews if len_reviews > 0 else 0
