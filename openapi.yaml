@@ -27,6 +27,24 @@ paths:
       responses:
         '200':
           description: Successful response
+          content:
+            application/json:
+              example:
+                _id: { oid: 6569e7e121a6cf9c8f45958b }
+                business_id: mpf3x-BjTdTEA3yCZrAYPw
+                name: The UPS Store
+                address: 87 Grasso Plaza Shopping Center
+                city: Affton
+                state: MO
+                postal_code: 63123
+                latitude: 38.551126
+                longitude: -90.335695
+                stars: 3
+                review_count: 15
+                is_open: 1
+                attributes: { BusinessAcceptsCreditCards: True }
+                categories: Shipping Centers, Local Services, Notaries, Mailbox Centers, Printing Services
+                hours: { Monday: 0:0-0:0, Tuesday: 8:0-18:30, Wednesday: 8:0-18:30, Thursday: 8:0-18:30, Friday: 8:0-18:30, Saturday: 8:0-14:0 }
   /business/{business_id}:
     get:
       summary: Get business by ID
@@ -40,6 +58,24 @@ paths:
       responses:
         '200':
           description: Successful response
+          content:
+            application/json:
+              example:
+                _id: { oid: 6569e7e121a6cf9c8f45958b }
+                business_id: mpf3x-BjTdTEA3yCZrAYPw
+                name: The UPS Store
+                address: 87 Grasso Plaza Shopping Center
+                city: Affton
+                state: MO
+                postal_code: 63123
+                latitude: 38.551126
+                longitude: -90.335695
+                stars: 3
+                review_count: 15
+                is_open: 1
+                attributes: { BusinessAcceptsCreditCards: True }
+                categories: Shipping Centers, Local Services, Notaries, Mailbox Centers, Printing Services
+                hours: { Monday: 0:0-0:0, Tuesday: 8:0-18:30, Wednesday: 8:0-18:30, Thursday: 8:0-18:30, Friday: 8:0-18:30, Saturday: 8:0-14:0 }
   /reviews/{business_id}:
     get:
       summary: Get reviews for a business
@@ -53,6 +89,19 @@ paths:
       responses:
         '200':
           description: Successful response
+          content:
+            application/json:
+              example:
+                _id: { oid: 6569e7e121a6cf9c8f45958b }
+                review_id: -WXMS4p3D9NQsAPw4YPEyw
+                user_id: Jks_uMtTZHqP-84wSZ3COg
+                business_id: mpf3x-BjTdTEA3yCZrAYPw
+                stars: 5
+                useful: 0
+                funny: 0
+                cool: 0
+                text: I have a po box there and ea. visit I am greeted with "hello". Asked the owner to wrap n send a family heirloom pic in a frame. They went the extra mile to assure safe travel. Received without damage. I was relieved n happy I had them handle.
+                date: 2014-09-15 14:37:42
   /reviews/trends/{business_id}:
     get:
       summary: Get trends for reviews of a business
