@@ -46,9 +46,6 @@ class MongoService:
     collection = connection["Yelp Review"]
     reviews = list(collection.find({"business_id": business_id}))
     len_reviews = len(reviews)
-
-    # avg_stars = sum(review[type] for review in reviews) / len_reviews if len_reviews > 0 else 0
-
     avg_stars = getAvgFromReview(reviews, "stars", len_reviews)
     avg_useful = getAvgFromReview(reviews, "useful", len_reviews)
     avg_funny = getAvgFromReview(reviews, "funny", len_reviews)
